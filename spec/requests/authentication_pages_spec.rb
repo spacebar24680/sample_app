@@ -39,6 +39,12 @@ describe "AuthenticationPages" do
 			it { should have_link('Sign out', 		href: signout_path)}
 			it { should_not have_link('Sign in', 	href: signin_path)}
 
+			describe "should not be allowed to sign up again" do
+				before { get signup_path }
+				specify { response.should redirect_to(root_path)}
+			end
+
+
 			describe "followed by signout" do
 				before { click_link "Sign out"}
 				it {should have_link('Sign in')}

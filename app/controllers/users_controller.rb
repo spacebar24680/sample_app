@@ -12,7 +12,12 @@ class UsersController < ApplicationController
   end
 
   def new
-  	@user = User.new
+    unless signed_in?
+  	 @user = User.new
+    else
+      flash[:info] = "Already signed in."
+      redirect_to root_path
+    end
   end
 
   def create
