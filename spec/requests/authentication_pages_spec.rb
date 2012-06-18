@@ -120,5 +120,15 @@ describe "AuthenticationPages" do
 				specify {response.should redirect_to(root_path)}
 			end
 		end
+
+		describe "as admin user" do
+			let(:admin_user) {FactoryGirl.create(:admin)}
+			before { valid_signin admin_user }
+
+			it "should not be able to delete himself" do
+				expect { delete user_path(admin_user)}.not_to change(User, :count)
+			end
+		end
+
 	end
 end
