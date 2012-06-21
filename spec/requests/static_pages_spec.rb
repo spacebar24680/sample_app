@@ -48,7 +48,11 @@ describe "Static pages" do
           FactoryGirl.create(:micropost, user: user, content: "dolor")
           page.should have_selector("span", :content => "microposts")
         end
+      end
 
+      describe "should paginate microposts" do
+        before(:all){31.times{FactoryGirl.create(:micropost, user: user, content: "lorem")}}
+        it {should have_selector('div.pagination')}
       end
     end
   end
