@@ -31,6 +31,25 @@ describe "Static pages" do
           page.should have_selector("li##{item.id}", text: item.content)
         end
       end
+
+      describe "should have proper sidebar micropost counts" do
+        let(:user) { FactoryGirl.create(:user) }
+        before do
+          FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
+          valid_signin user
+          visit root_path
+        end
+
+        it "should have one micropost" do
+          page.should have_selector("span", :content => "1 micropost")
+        end
+
+        it "should have more than one micropost" do
+          FactoryGirl.create(:micropost, user: user, content: "dolor")
+          page.should have_selector("span", :content => "microposts")
+        end
+
+      end
     end
   end
 
